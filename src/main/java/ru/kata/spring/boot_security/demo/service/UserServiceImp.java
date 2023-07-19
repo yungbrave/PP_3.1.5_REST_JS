@@ -59,6 +59,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void update(long id, User updatedUser) {
+        userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         updatedUser.setId(id);
         userRepository.save(updatedUser);
     }
@@ -88,14 +89,14 @@ public class UserServiceImp implements UserService, UserDetailsService {
                 "$2a$12$vSOELe0vyyH.tbMAtlcza.snVT24qZfM1oZaCdrp5bheIqqNR/nwy",
                 "user@gmail.com",
                 new HashSet<>() {{
-            add(userRole);
-        }}));
+                    add(userRole);
+                }}));
         userRepository.save(new User("admin",
                 "$2a$12$vSOELe0vyyH.tbMAtlcza.snVT24qZfM1oZaCdrp5bheIqqNR/nwy",
                 "admin@gmail.com",
                 new HashSet<>() {{
-            add(userRole);
-            add(adminRole);
-        }}));
+                    add(userRole);
+                    add(adminRole);
+                }}));
     }
 }

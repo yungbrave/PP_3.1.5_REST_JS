@@ -15,7 +15,9 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.util.UserErrorResponse;
 import ru.kata.spring.boot_security.demo.util.UserNotCreatedException;
 import ru.kata.spring.boot_security.demo.util.UserNotFoundException;
+import ru.kata.spring.boot_security.demo.util.UserNotUpdatedException;
 
+import javax.persistence.ElementCollection;
 import javax.validation.Valid;
 import java.util.List;;
 import java.util.stream.Collectors;
@@ -52,6 +54,7 @@ public class RestAdminController {
     @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid UserDTO userDTO,
                                              BindingResult bindingResult) {
+        System.out.println("test");
         if (bindingResult.hasErrors()) {
             StringBuilder errorMessage = new StringBuilder();
             List<FieldError> errors = bindingResult.getFieldErrors();
@@ -65,10 +68,22 @@ public class RestAdminController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-//    @PatchMapping
-//    public ResponseEntity<HttpStatus> edit() {
-//
-//    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<HttpStatus> edit(@PathVariable("id") long id,
+                                           @RequestBody @Valid UserDTO toBeUpdatedUserDTO,
+                                           BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMessage = new StringBuilder();
+            List<FieldError> errors = bindingResult.getFieldErrors();
+
+            for (FieldError error : errors) {
+                errorMessage.append(error.getField()).append(" - ").append(error.getDefaultMessage()).append(";");
+            }
+            throw new UserNotUpdatedException(errorMessage.toString());
+        }
+        userService.update(id, convertToUser(toBeUpdatedUserDTO));
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") long id) {
@@ -76,11 +91,10 @@ public class RestAdminController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-
     @ExceptionHandler
     private ResponseEntity<UserErrorResponse> handleException(UserNotFoundException e) {
         UserErrorResponse response = new UserErrorResponse(
-                "Person with requested id not found",
+                "User not found",
                 System.currentTimeMillis()
         );
         // В HTTP ответе тело ответа (response) и статус в заголовке
@@ -90,6 +104,16 @@ public class RestAdminController {
 
     @ExceptionHandler
     private ResponseEntity<UserErrorResponse> handleException(UserNotCreatedException e) {
+        UserErrorResponse response = new UserErrorResponse(
+                e.getMessage(),
+                System.currentTimeMillis()
+        );
+        // В HTTP ответе тело ответа (response) и статус в заголовке
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); // NOT_FOUND - 40*
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<UserErrorResponse> handleException(UserNotUpdatedException e) {
         UserErrorResponse response = new UserErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()

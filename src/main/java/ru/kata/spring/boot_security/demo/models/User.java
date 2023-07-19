@@ -18,14 +18,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "username should be not empty")
     private String username;
 
-    @NotEmpty
+    @NotEmpty(message = "password should be not empty")
     private String password;
 
-    @Email
-    @NotEmpty
+    @Email(message = "invalid email format")
+    @NotEmpty(message = "email should be not empty")
     private String email;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
