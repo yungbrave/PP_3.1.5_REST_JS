@@ -60,7 +60,7 @@
 
                 <p class="h1">Admin panel</p>
 
-                <!--Toolbar: users table and new user-->
+                <!--Toolbar: buttons users table and new user-->
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group me-2" role="group" aria-label="First group">
                         <form th:method="GET" th:action="@{/admin}">
@@ -83,37 +83,38 @@
                     <tbody>
                     <tr>
                         <td>
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Role</th>
-                                    <th scope="col">Edit</th>
-                                    <th scope="col">Delete</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="userf: ${users}">
-                                    <td th:text="${userf.getId()}">ID</td>
-                                    <td th:text="${userf.getUsername()}">username</td>
-                                    <td th:text="${userf.getEmail()}">email</td>
-                                    <td th:text="${userf.getRolesWithNoBraces()}">role</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                th:data-bs-target="${'#modalEdit'+userf.id}">
-                                            Edit
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <form th:method="DELETE" th:action="@{/admin/{id}(id=${userf.getId()})}">
-                                            <input type="submit" class="btn btn-danger"
-                                                   value="Delete">
-                                        </form>
-                                    </td>
-                                </tr>
-                                </tbody>
+                            <table class="table table-striped" id="table">
+<!--                                <thead>-->
+<!--                                 <tr>-->
+<!--                                <th scope="col">ID</th>-->
+<!--                                 <th scope="col">Username</th>-->
+<!--                                 <th scope="col">Email</th>-->
+<!--                                 <th scope="col">Role</th>-->
+<!--                                 <th scope="col">Edit</th>-->
+<!--                                <th scope="col">Delete</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+
+<!--                                <tr th:each="userf: ${users}">-->
+<!--                                    <td th:text="${userf.getId()}">ID</td>-->
+<!--                                    <td th:text="${userf.getUsername()}">username</td>-->
+<!--                                    <td th:text="${userf.getEmail()}">email</td>-->
+<!--                                    <td th:text="${userf.getRolesWithNoBraces()}">role</td>-->
+<!--                                    <td>-->
+<!--                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"-->
+<!--                                                th:data-bs-target="${'#modalEdit'+userf.id}">-->
+<!--                                            Edit-->
+<!--                                        </button>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <form th:method="DELETE" th:action="@{/admin/{id}(id=${userf.getId()})}">-->
+<!--                                            <input type="submit" class="btn btn-danger"-->
+<!--                                                   value="Delete">-->
+<!--                                        </form>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                </tbody>-->
                             </table>
                         </td>
                     </tr>

@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin/api/users")
+@CrossOrigin
 public class RestAdminController {
 
     private final UserService userService;
