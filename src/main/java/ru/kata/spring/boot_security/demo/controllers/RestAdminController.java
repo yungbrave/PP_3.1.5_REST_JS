@@ -23,7 +23,7 @@ import java.util.List;;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/admin/api/users")
+@RequestMapping("/api/admin/users")
 @CrossOrigin
 public class RestAdminController {
 

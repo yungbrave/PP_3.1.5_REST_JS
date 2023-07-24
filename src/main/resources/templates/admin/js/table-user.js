@@ -1,4 +1,4 @@
-fetch('http://localhost:8080/admin/api/users')
+fetch('http://localhost:8080/api/admin/users')
     .then(response => response.json())
     .then(json => {
         console.log(json)
