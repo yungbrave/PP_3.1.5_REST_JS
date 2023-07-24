@@ -49,7 +49,7 @@
                     <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
                         Admin
                     </a>
-                    <a th:href="@{/user}" class="list-group-item list-group-item-action">User</a>
+                    <a th:href="@{user/show-user.html}" class="list-group-item list-group-item-action">User</a>
                 </div>
             </div>
         </div>
@@ -85,22 +85,22 @@
                         <td>
                             <table class="table table-striped" id="table">
 <!--                                <thead>-->
-<!--                                 <tr>-->
-<!--                                <th scope="col">ID</th>-->
-<!--                                 <th scope="col">Username</th>-->
-<!--                                 <th scope="col">Email</th>-->
-<!--                                 <th scope="col">Role</th>-->
-<!--                                 <th scope="col">Edit</th>-->
-<!--                                <th scope="col">Delete</th>-->
+<!--                                <tr>-->
+<!--                                    <th scope="col">ID</th>-->
+<!--                                    <th scope="col">Username</th>-->
+<!--                                    <th scope="col">Email</th>-->
+<!--                                    <th scope="col">Role</th>-->
+<!--                                    <th scope="col">Edit</th>-->
+<!--                                    <th scope="col">Delete</th>-->
 <!--                                </tr>-->
 <!--                                </thead>-->
 <!--                                <tbody>-->
 
-<!--                                <tr th:each="userf: ${users}">-->
-<!--                                    <td th:text="${userf.getId()}">ID</td>-->
-<!--                                    <td th:text="${userf.getUsername()}">username</td>-->
-<!--                                    <td th:text="${userf.getEmail()}">email</td>-->
-<!--                                    <td th:text="${userf.getRolesWithNoBraces()}">role</td>-->
+<!--                                <tr id="tr">-->
+<!--                                    <td id="id1">ID</td>-->
+<!--                                    <td>username</td>-->
+<!--                                    <td>email</td>-->
+<!--                                    <td>role</td>-->
 <!--                                    <td>-->
 <!--                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"-->
 <!--                                                th:data-bs-target="${'#modalEdit'+userf.id}">-->

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
-import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
+import ru.kata.spring.boot_security.demo.security.JwtUser;
 import ru.kata.spring.boot_security.demo.util.UserNotFoundException;
 
 import java.util.HashSet;
@@ -73,11 +73,9 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
-        }
-        return new UserDetailsImpl(user.get());
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+        return new JwtUser(user);
     }
 
     @Transactional
