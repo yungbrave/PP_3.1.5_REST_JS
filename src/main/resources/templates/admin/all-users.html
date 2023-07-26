@@ -49,7 +49,8 @@
                     <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
                         Admin
                     </a>
-                    <a th:href="@{user/show-user.html}" class="list-group-item list-group-item-action">User</a>
+                    <a href="http://localhost:63342/PP_3.1.5_REST_JS/src/main/resources/templates/user/show-user.html?_ijt=84mkglko0nqam6vcb2agkoiveo&_ij_reload=RELOAD_ON_SAVE"
+                       class="list-group-item list-group-item-action">User</a>
                 </div>
             </div>
         </div>
@@ -63,12 +64,9 @@
                 <!--Toolbar: buttons users table and new user-->
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group me-2" role="group" aria-label="First group">
-                        <form th:method="GET" th:action="@{/admin}">
-                            <input type="submit" class="btn btn-light active" value="Users table">
-                        </form>
-                        <form th:method="GET" th:action="@{/admin/new}">
-                            <input type="submit" class="btn btn-light" value="New user">
-                        </form>
+                        <button class="btn btn-light active">Users table</button>
+                        <a href="http://localhost:63342/PP_3.1.5_REST_JS/src/main/resources/templates/admin/new.html?_ijt=dohkj3m2h7jm8eta55504gii9k&_ij_reload=RELOAD_ON_SAVE"
+                           class="btn btn-light">New user</a>
                     </div>
                 </div>
 
@@ -83,39 +81,53 @@
                     <tbody>
                     <tr>
                         <td>
-                            <table class="table table-striped" id="table">
-<!--                                <thead>-->
-<!--                                <tr>-->
-<!--                                    <th scope="col">ID</th>-->
-<!--                                    <th scope="col">Username</th>-->
-<!--                                    <th scope="col">Email</th>-->
-<!--                                    <th scope="col">Role</th>-->
-<!--                                    <th scope="col">Edit</th>-->
-<!--                                    <th scope="col">Delete</th>-->
-<!--                                </tr>-->
-<!--                                </thead>-->
-<!--                                <tbody>-->
 
-<!--                                <tr id="tr">-->
-<!--                                    <td id="id1">ID</td>-->
-<!--                                    <td>username</td>-->
-<!--                                    <td>email</td>-->
-<!--                                    <td>role</td>-->
-<!--                                    <td>-->
-<!--                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"-->
-<!--                                                th:data-bs-target="${'#modalEdit'+userf.id}">-->
-<!--                                            Edit-->
-<!--                                        </button>-->
-<!--                                    </td>-->
-<!--                                    <td>-->
-<!--                                        <form th:method="DELETE" th:action="@{/admin/{id}(id=${userf.getId()})}">-->
+                            <!--fill in with table-users.js-->
+                            <table class="table table-striped" id="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                <tr id="tr">
+                                    <td id="td-edit">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#modalEdit">
+                                            Edit
+                                        </button>
+                                    </td>
+                                    <td id="td-delete">
+                                        <form th:method="DELETE" action="http://localhost:8080/api/admin/users/1">
+                                            <input type="submit" class="btn btn-danger"
+                                                   value="Delete">
+                                        </form>
+                                    <td id="td-edit-2">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#modalEdit">
+                                            Edit
+                                        </button>
+                                    </td>
+                                    <td id="td-delete-2">
+                                        <a href="http://localhost:63342/PP_3.1.5_REST_JS/src/main/resources/templates/admin/all-users.html?_ijt=a3tbtop836f72gk6oj9cpk45gn&_ij_reload=RELOAD_ON_SAVE" class="btn btn-danger">
+                                            Delete
+                                        </a>
+<!--                                        <form th:method="DELETE" action="http://localhost:8080/api/admin/users/2"-->
+<!--                                        id="form-delete-2">-->
 <!--                                            <input type="submit" class="btn btn-danger"-->
 <!--                                                   value="Delete">-->
 <!--                                        </form>-->
-<!--                                    </td>-->
-<!--                                </tr>-->
-<!--                                </tbody>-->
+                                    </td>
+
+                                </tr>
+                                </tbody>
                             </table>
+
                         </td>
                     </tr>
                     </tbody>
@@ -126,7 +138,7 @@
 </div>
 <!--модальное окно edit-->
 <th:block th:each="updatedUser:${users}">
-    <div class="modal fade" th:id="${'modalEdit'+updatedUser.id}" tabindex="-1" aria-labelledby="editModal"
+    <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="editModal"
          aria-hidden="true">
         <form th:method="PATCH" th:action="@{/admin/{id}(id=${updatedUser.getId()})}" th:object="${updatedUser}">
             <div class="modal-dialog">

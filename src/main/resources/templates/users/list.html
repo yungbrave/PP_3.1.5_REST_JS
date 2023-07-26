@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="https://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>User</title>
+    <title>ListOfAll</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
@@ -30,6 +30,11 @@
             color: black;
         }
 
+        .c {
+            margin: auto; /* Выравниваем по центру */
+            text-align: center;
+        }
+
     </style>
 
 </head>
@@ -51,41 +56,17 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2">
+        <div class="col-2 user-choice">
             <ul class="nav nav-pills">
                 <li class="nav-item">
                     <div sec:authorize="hasAuthority('ROLE_ADMIN')">
-                        <a th:href="@{/api/users/admin}" class="nav-link">Admin</a>
+                        <a id="adminButton" href="#" class="nav-link active">Admin</a>
                     </div>
-                    <a class="nav-link active">User</a>
+                    <a id="userButton" href="#" class="nav-link">User</a>
                 </li>
             </ul>
         </div>
         <div class="col-10 main-table">
-            <h1>User information-page</h1>
-            <div class="card">
-                <div class="card-block">
-                    <table class="table table-striped">
-                        <caption>
-                            <h4>About User</h4>
-                        </caption>
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Surname</th>
-                            <th>Role(s)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <td id="tdUserId"></td>
-                        <td id="tdUserName"></td>
-                        <td id="tdUserSurname"></td>
-                        <td id="tdUserRoles"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -95,6 +76,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
         crossorigin="anonymous"></script>
-<script src="/user.js"></script>
+<script src="/list.js"></script>
 </body>
 </html>

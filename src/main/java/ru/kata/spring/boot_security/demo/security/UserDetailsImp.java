@@ -8,11 +8,11 @@ import ru.kata.spring.boot_security.demo.models.User;
 import java.util.Collection;
 import java.util.Set;
 
-public class JwtUser implements UserDetails {
+public class UserDetailsImp implements UserDetails {
 
     private final User user;
 
-    public JwtUser(User user) {
+    public UserDetailsImp(User user) {
         this.user = user;
     }
 

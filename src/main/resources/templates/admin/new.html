@@ -47,7 +47,7 @@
                     <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
                         Admin
                     </a>
-                    <a th:href="@{/user}" class="list-group-item list-group-item-action">User</a>
+                    <a th:href="@{/templates/users}" class="list-group-item list-group-item-action">User</a>
                 </div>
             </div>
         </div>
@@ -60,12 +60,9 @@
                 <!--Toolbar: users table and new user-->
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group me-2" role="group" aria-label="First group">
-                        <form th:method="GET" th:action="@{/admin}">
-                            <input type="submit" class="btn btn-light" value="Users table">
-                        </form>
-                        <form th:method="GET" th:action="@{/admin/new}">
-                            <input type="submit" class="btn btn-light active" value="New user">
-                        </form>
+                        <a href="http://localhost:63342/PP_3.1.5_REST_JS/src/main/resources/templates/admin/all-users.html?_ijt=84mkglko0nqam6vcb2agkoiveo&_ij_reload=RELOAD_ON_SAVE"
+                           class="btn btn-light">Users table</a>
+                        <button class="btn btn-light active">New user</button>
                     </div>
                 </div>
 

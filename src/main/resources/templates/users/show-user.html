@@ -46,12 +46,17 @@
         <div class="col px-0">
             <div class="d-flex flex-column pt-2">
                 <div class="list-group list-group-flush">
-                    <th:block th:if="${role_admin.equals('ROLE_ADMIN')}">
-                        <a th:href="@{/admin/all-users.html}" class="list-group-item list-group-item-action"
-                           aria-current="true">
-                            Admin
-                        </a>
-                    </th:block>
+<!--                    <th:block th:if="${role_admin.equals('ROLE_ADMIN')}">-->
+<!--                        <a th:href="@{/admin/all-users.html}" class="list-group-item list-group-item-action"-->
+<!--                           aria-current="true">-->
+<!--                            Admin-->
+<!--                        </a>-->
+<!--                    </th:block>-->
+                    <a href="http://localhost:63342/PP_3.1.5_REST_JS/src/main/resources/templates/admin/all-users.html?_ijt=84mkglko0nqam6vcb2agkoiveo&_ij_reload=RELOAD_ON_SAVE"
+                       class="list-group-item list-group-item-action"
+                       aria-current="true">
+                        Admin
+                    </a>
                     <a href="#" class="list-group-item list-group-item-action active">User</a>
                 </div>
             </div>

@@ -1,8 +1,11 @@
-package ru.kata.spring.boot_security.demo.controllers;
+package ru.kata.spring.boot_security.demo.controllersREST;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,11 +16,11 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("rest/api/users/")
+@CrossOrigin(origins = "*")
 public class RestUserController {
 
     private final UserService userService;
-
     private final ModelMapper modelMapper;
 
     @Autowired
@@ -26,10 +29,10 @@ public class RestUserController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
-    public UserDTO getUser(Principal principal) {
+    @GetMapping("/user")
+    public ResponseEntity<UserDTO> getUser(Principal principal) {
         User user = userService.findByUsername(principal.getName());
-        return convertToUserDto(user);
+        return new ResponseEntity<>(convertToUserDto(user), HttpStatus.OK);
     }
 
     private User convertToUser(UserDTO userDTO) {

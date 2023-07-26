@@ -10,6 +10,7 @@ public interface UserService {
 
     User findOne(long id);
 
+
     User findByUsername(String username);
 
     void save(User user);
@@ -19,4 +20,5 @@ public interface UserService {
     void delete(long id);
 
     void setInitData();
+
 }

@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.controllers;
+package ru.kata.spring.boot_security.demo.controllersREST;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,50 +10,46 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.dto.UserDTO;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.util.UserErrorResponse;
 import ru.kata.spring.boot_security.demo.util.UserNotCreatedException;
 import ru.kata.spring.boot_security.demo.util.UserNotFoundException;
 import ru.kata.spring.boot_security.demo.util.UserNotUpdatedException;
 
-import javax.persistence.ElementCollection;
+
 import javax.validation.Valid;
 import java.util.List;;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/admin/users")
-@CrossOrigin
+@RequestMapping("/rest/api/users")
+@CrossOrigin(origins = "*")
 public class RestAdminController {
 
     private final UserService userService;
-
-    private final RoleService roleService;
-
     private final ModelMapper modelMapper;
 
     @Autowired
     public RestAdminController(UserService userService,
-                               @Lazy RoleService roleService,
                                @Lazy ModelMapper modelMapper) {
         this.userService = userService;
-        this.roleService = roleService;
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
-    public List<UserDTO> getAllUsers() {
-        return userService.findAll().stream().map(this::convertToUserDto).collect(Collectors.toList());
+    @GetMapping("/admin")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        return new ResponseEntity<>(userService.findAll()
+                .stream().map(this::convertToUserDto).collect(Collectors.toList()),
+                HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/admin/{id}")
     public UserDTO getUser(@PathVariable("id") long id) {
         return convertToUserDto(userService.findOne(id));
     }
 
-    @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid UserDTO userDTO,
+    @PostMapping("/admin")
+    public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO,
                                              BindingResult bindingResult) {
         System.out.println("test");
         if (bindingResult.hasErrors()) {
@@ -66,11 +62,11 @@ public class RestAdminController {
             throw new UserNotCreatedException(errorMessage.toString());
         }
         userService.save(convertToUser(userDTO));
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> edit(@PathVariable("id") long id,
+    @PatchMapping("/admin/{id}")
+    public ResponseEntity<UserDTO> edit(@PathVariable("id") long id,
                                            @RequestBody @Valid UserDTO toBeUpdatedUserDTO,
                                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -83,13 +79,13 @@ public class RestAdminController {
             throw new UserNotUpdatedException(errorMessage.toString());
         }
         userService.update(id, convertToUser(toBeUpdatedUserDTO));
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new ResponseEntity<>(toBeUpdatedUserDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("id") long id) {
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<String> delete(@PathVariable("id") long id) {
         userService.delete(id);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new ResponseEntity<>(String.format("User with id = %d was deleted", id), HttpStatus.OK);
     }
 
     @ExceptionHandler
